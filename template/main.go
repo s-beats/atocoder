@@ -55,10 +55,14 @@ func abs(n int) int {
 	return int(math.Abs(float64(n)))
 }
 
-func popBack(l *[]any) any {
+func popBack(l *[]interface{}) interface{} {
 	e := (*l)[len(*l)-1]
 	*l = (*l)[:len(*l)-1]
 	return e
+}
+
+func distance(x1, y1, x2, y2 int) float64 {
+	return math.Sqrt(math.Pow(float64(x1-x2), 2) + math.Pow(float64(y1-y2), 2))
 }
 
 type mem map[int]int
