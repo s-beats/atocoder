@@ -55,11 +55,12 @@ func main() {
 	mem[2] = int(math.Abs(float64(NS[1]) - float64(NS[0])))
 
 	for i := 2; i < N; i++ {
-		// 1つずつ
+		// 1つ前からの距離
 		a := math.Abs(float64(NS[i])-float64(NS[i-1])) + float64(mem[i])
-		// 1つとばし
+		// 2つ前からの距離
 		b := math.Abs(float64(NS[i])-float64(NS[i-2])) + float64(mem[i-1])
 
+		// 結果をメモ化
 		mem[i+1] = int(math.Min(a, b))
 	}
 
