@@ -2,7 +2,7 @@ package main
 
 import (
 	"bufio"
-	"fmt"
+	. "fmt"
 	"math"
 	"os"
 	"strconv"
@@ -18,7 +18,7 @@ func readline() string {
 	for {
 		l, p, e := rdr.ReadLine()
 		if e != nil {
-			fmt.Println(e.Error())
+			Println(e.Error())
 			panic(e)
 		}
 		buf = append(buf, l...)
@@ -72,5 +72,5 @@ func main() {
 	NS := readIntSlice()
 	m := new(mem)
 
-	fmt.Println(N, NS, m)
+	Println(N, NS, m)
 }
