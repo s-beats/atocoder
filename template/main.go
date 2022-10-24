@@ -78,7 +78,7 @@ type mem map[int]int
 func main() {
 	N := toInt(readline())
 	NS := readIntSlice()
-	m := new(mem)
+	m := make(mem)
 
 	Println(N, NS, m)
 }
