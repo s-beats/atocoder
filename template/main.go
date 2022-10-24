@@ -65,6 +65,14 @@ func distance(x1, y1, x2, y2 int) float64 {
 	return math.Sqrt(math.Pow(float64(x1-x2), 2) + math.Pow(float64(y1-y2), 2))
 }
 
+func isOdd(n int) bool {
+	return n&1 == 1
+}
+
+func isEven(n int) bool {
+	return n&1 == 0
+}
+
 type mem map[int]int
 
 func main() {
