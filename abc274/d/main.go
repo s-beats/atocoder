@@ -65,18 +65,60 @@ func distance(x1, y1, x2, y2 int) float64 {
 	return math.Sqrt(math.Pow(float64(x1-x2), 2) + math.Pow(float64(y1-y2), 2))
 }
 
+func isOdd(n int) bool {
+	return n&1 == 1
+}
+
+func isEven(n int) bool {
+	return n&1 == 0
+}
+
 type mem map[int]int
+
+func visitedTarget(start, target int, elements []int, flag bool) bool {
+	dp := make(map[int]bool)
+
+	dp[start] = true
+	if flag {
+		// TODO: comment
+		dp[-start] = true
+	}
+
+	for _, v := range elements {
+		// TODO: comment
+		tmp := make(map[int]bool)
+		for k := range dp {
+			tmp[k+v] = true
+			tmp[k-v] = true
+		}
+		dp = tmp
+	}
+
+	return dp[target]
+}
 
 func main() {
 	NS := readIntSlice()
-	N, x, y := NS[0], NS[1], NS[2]
+	_, x, y := NS[0], NS[1], NS[2]
 
-	NS2 := readIntSlice()
-	m := new(mem)
+	A := readIntSlice()
 
-	for i, v := range NS2[2:] {
-		fmt.Println("👺", i, v)
+	odds := make([]int, 0, len(A)/2+1)
+	evens := make([]int, 0, len(A)/2+1)
+
+	// Aiが奇数ならx, 偶数ならy
+	for i, v := range A {
+		if isOdd(i + 1) {
+			odds = append(odds, v)
+		} else {
+			evens = append(evens, v)
+		}
 	}
 
-	fmt.Println(N, NS, m, x, y)
+	if visitedTarget(odds[0], x, odds[1:], false) && visitedTarget(0, y, evens, true) {
+		fmt.Println("Yes")
+		return
+	}
+
+	fmt.Println("No")
 }
