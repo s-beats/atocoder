@@ -75,17 +75,16 @@ func isEven(n int) bool {
 
 type mem map[int]int
 
-func visitedTarget(start, target int, elements []int, flag bool) bool {
+func visitedTarget(start, target int, elements []int, skipStartNegative bool) bool {
 	dp := make(map[int]bool)
 
 	dp[start] = true
-	if flag {
-		// TODO: comment
+	if skipStartNegative {
 		dp[-start] = true
 	}
 
 	for _, v := range elements {
-		// TODO: comment
+		// ひとつ前のステップのみを保持
 		tmp := make(map[int]bool)
 		for k := range dp {
 			tmp[k+v] = true
@@ -115,6 +114,8 @@ func main() {
 		}
 	}
 
+	// X軸の場合は、startの負の場合をスキップ
+	// 問題の条件により、必ず正の方向に進むため
 	if visitedTarget(odds[0], x, odds[1:], false) && visitedTarget(0, y, evens, true) {
 		fmt.Println("Yes")
 		return
