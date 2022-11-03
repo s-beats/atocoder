@@ -77,37 +77,36 @@ func isEven(n int) bool {
 
 type mem map[int]int
 
-// 大文字小文字の区別をしないソートができる型
-type originalStringSlice []string
-
-func (x originalStringSlice) Len() int { return len(x) }
-func (x originalStringSlice) Less(i, j int) bool {
-	return strings.ToLower(x[i]) < strings.ToLower(x[j])
-}
-func (x originalStringSlice) Swap(i, j int) { x[i], x[j] = x[j], x[i] }
-
-func (x originalStringSlice) Sort() { sort.Sort(x) }
-
 func main() {
 	S := readline()
 
-	SS := []string{}
-	startWord := false
-	for _, v := range S {
-		if unicode.IsUpper(v) {
-			if startWord {
-				startWord = false
-				SS[len(SS)-1] += string(v)
-			} else {
-				startWord = true
-				SS = append(SS, string(v))
-			}
-		} else {
-			SS[len(SS)-1] += string(v)
+	Println(solve(S))
+}
+
+func solve(s string) string {
+	words := []string{}
+	for i := 0; i < len(s); {
+		j := i + 1
+		for j < len(s) && unicode.IsLower(rune(s[j])) {
+			j++
 		}
+
+		wordRune := []rune(s[i : j+1])
+		wordRune[0] = unicode.ToLower(wordRune[0])
+		wordRune[len(wordRune)-1] = unicode.ToLower(wordRune[len(wordRune)-1])
+		words = append(words, string(wordRune))
+
+		i = j + 1
 	}
 
-	sort.Sort(originalStringSlice(SS))
+	sort.Strings(words)
 
-	Println(strings.Join(SS, ""))
+	for i := 0; i < len(words); i++ {
+		wordRune := []rune(words[i])
+		wordRune[0] = unicode.ToUpper(wordRune[0])
+		wordRune[len(wordRune)-1] = unicode.ToUpper(wordRune[len(wordRune)-1])
+		words[i] = string(wordRune)
+	}
+
+	return strings.Join(words, "")
 }
