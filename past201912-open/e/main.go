@@ -113,7 +113,11 @@ func solve(follow map[int][]bool, n, a, b int) {
 	case 1:
 		follow[a][b] = true
 	case 2:
-		f := follow
+		// Loop内でMapを更新するのでコピー
+		f := make(map[int][]bool, 0)
+		for k, v := range follow {
+			f[k] = v
+		}
 		for k, v := range f {
 			if k == a {
 				continue
@@ -124,6 +128,7 @@ func solve(follow map[int][]bool, n, a, b int) {
 			}
 		}
 	case 3:
+		// Loop内でSliceを更新するのでコピー
 		fa := make([]bool, len(follow[a]))
 		copy(fa, follow[a])
 		for i, v := range fa {
