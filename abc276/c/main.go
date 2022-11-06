@@ -48,7 +48,7 @@ func perviousPermuutation(src []int) []int {
 	copy(dst, src)
 
 	// 入力の境目(大きい範囲の末尾)を探す
-	boaderIdx := 0
+	boaderIdx := -1
 	boader := -1
 	for i := size - 1; i > 0; i-- {
 		if src[i-1] > src[i] {
@@ -56,6 +56,11 @@ func perviousPermuutation(src []int) []int {
 			boader = src[i-1]
 			break
 		}
+	}
+
+	// 入力よりが一番前の場合はそのまま返す
+	if boaderIdx == -1 {
+		return dst
 	}
 
 	// 境目以降を降順
