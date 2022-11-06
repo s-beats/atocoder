@@ -14,6 +14,7 @@ func main() {
 		Scan(&A[i])
 	}
 
+	// 2,3のそれぞれの次数を求める
 	two := make([]int, N)
 	three := make([]int, N)
 	prev := 1
@@ -36,6 +37,7 @@ func main() {
 		prev = v
 	}
 
+	// それぞれのリストの最小値と、各要素の差分を足す無名関数
 	ans := 0
 	fn := func(is []int) {
 		sort.Slice(is, func(i, j int) bool { return is[i] < is[j] })
