@@ -4,6 +4,7 @@ import (
 	"bufio"
 	. "fmt"
 	"math"
+	"math/big"
 	"os"
 	"strconv"
 	"strings"
@@ -42,15 +43,19 @@ func toInt(s string) int {
 	return n
 }
 
+func pow(x, y int) int {
+	bigx := big.NewInt(int64(x))
+	bigy := big.NewInt(int64(y))
+	return int(bigx.Exp(bigx, bigy, nil).Int64())
+}
+
 func main() {
-	unfair := math.Pow10(18)
 	l := readIntSlice()
 	a, b, _, k := l[0], l[1], l[2], l[3]
+	unfair := math.Pow10(18)
 	ans := a - b
-	if k&1 == 1 {
-		ans = b - a
-	} else {
-		ans = a - b
+	if k > 0 {
+		ans *= int(pow(-1, k))
 	}
 	ansAbs := math.Abs(float64(ans))
 	if ansAbs > unfair {
