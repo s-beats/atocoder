@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	. "fmt"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -39,6 +40,14 @@ func readIntSlice() []int {
 func toInt(s string) int {
 	n, _ := strconv.Atoi(s)
 	return n
+}
+
+func abs(n int) int {
+	return int(math.Abs(float64(n)))
+}
+
+func isOdd(n int) bool {
+	return n&1 == 1
 }
 
 func main() {
