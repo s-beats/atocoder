@@ -59,7 +59,7 @@ func main() {
 			Println("No")
 			return
 		}
-		if elapse&1 == 1 && (xabs+yabs)&1 == 0 || elapse&1 == 0 && (xabs+yabs)&1 == 1 {
+		if elapse&1 != (xabs+yabs)&1 {
 			Println("No")
 			return
 		}
