@@ -42,6 +42,7 @@ func toInt(s string) int {
 	return n
 }
 
+// ペアリング
 // 組み合わせと上界をうまく求める
 func main() {
 	N := toInt(readline())
