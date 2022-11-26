@@ -42,6 +42,7 @@ func toInt(s string) int {
 	return n
 }
 
+// 1つ前の順列を返す
 func perviousPermuutation(src []int) []int {
 	size := len(src)
 	dst := make([]int, size)
@@ -58,7 +59,7 @@ func perviousPermuutation(src []int) []int {
 		}
 	}
 
-	// 入力よりが一番前の場合はそのまま返す
+	// 入力より一番前の場合はそのまま返す
 	if boaderIdx == -1 {
 		return dst
 	}
