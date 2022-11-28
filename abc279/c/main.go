@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	. "fmt"
 	"math"
 	"os"
@@ -29,6 +30,22 @@ func readline() string {
 	return string(buf)
 }
 
+func readByteSlice() []byte {
+	buf := make([]byte, 0, 16)
+	for {
+		l, p, e := rdr.ReadLine()
+		if e != nil {
+			Println(e.Error())
+			panic(e)
+		}
+		buf = append(buf, l...)
+		if !p {
+			break
+		}
+	}
+	return buf
+}
+
 func readIntSlice() []int {
 	slice := make([]int, 0)
 	lines := strings.Split(readline(), " ")
@@ -51,44 +68,47 @@ func isOdd(n int) bool {
 	return n&1 == 1
 }
 
+type bs = []byte
+
 func main() {
 	l := readIntSlice()
 	h, w := l[0], l[1]
 
-	s := make([]string, h)
-	t := make([]string, h)
+	s := make([]bs, h)
+	t := make([]bs, h)
 
 	for i := 0; i < h; i++ {
-		s[i] = readline()
+		l := readByteSlice()
+		s[i] = make(bs, len(l))
+		copy(s[i], l)
 	}
 	for i := 0; i < h; i++ {
-		t[i] = readline()
+		l := readByteSlice()
+		t[i] = make(bs, len(l))
+		copy(t[i], l)
 	}
 
 	// [][]stringを作るより、[]stringのほうが早い？
 	// []byteに要素を入れていって最後にstring変換
-	c1 := make([]string, w)
-	c2 := make([]string, w)
-	for i := range c1 {
-		bs := make([]byte, h)
-		for j, v := range s {
-			bs[j] = v[i]
+	c1 := make([]bs, w)
+	c2 := make([]bs, w)
+	for _, v := range s {
+		for j := range v {
+			c1[j] = append(c1[j], v[j])
 		}
-		c1[i] = string(bs)
 	}
-	for i := range c2 {
-		bs := make([]byte, h)
-		for j, v := range t {
-			bs[j] = v[i]
+	for _, v := range t {
+		for j := range v {
+			c2[j] = append(c2[j], v[j])
 		}
-		c2[i] = string(bs)
 	}
 
-	sort.Strings(c1)
-	sort.Strings(c2)
+	// Lessでうまいことやりたい
+	sort.Slice(c1, func(i, j int) bool { return string(c1[i]) < string(c1[j]) })
+	sort.Slice(c2, func(i, j int) bool { return string(c2[i]) < string(c2[j]) })
 
 	for i, v := range c1 {
-		if v != c2[i] {
+		if !bytes.Equal(c2[i], v) {
 			Println("No")
 			return
 		}
