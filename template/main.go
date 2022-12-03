@@ -42,12 +42,37 @@ func toInt(s string) int {
 	return n
 }
 
+func toStr(s string) int {
+	n, _ := strconv.Atoi(s)
+	return n
+}
+
 func abs(n int) int {
 	return int(math.Abs(float64(n)))
 }
 
+func max(x, y int) int {
+	return int(math.Max(float64(x), float64(y)))
+}
+
+func min(x, y int) int {
+	return int(math.Min(float64(x), float64(y)))
+}
+
 func isOdd(n int) bool {
 	return n&1 == 1
+}
+
+func isPrime(n int) bool {
+	if n < 2 {
+		return false
+	}
+	for i := 2; i*i <= n; i++ {
+		if n%i == 0 {
+			return false
+		}
+	}
+	return true
 }
 
 func main() {
