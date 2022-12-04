@@ -15,10 +15,9 @@ var rdr = bufio.NewReaderSize(os.Stdin, 1000000)
 func readline() string {
 	buf := make([]byte, 0, 16)
 	for {
-		l, p, e := rdr.ReadLine()
-		if e != nil {
-			Println(e.Error())
-			panic(e)
+		l, p, err := rdr.ReadLine()
+		if err != nil {
+			panic(err)
 		}
 		buf = append(buf, l...)
 		if !p {
