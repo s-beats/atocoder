@@ -73,6 +73,7 @@ func main() {
 	Println(rec())
 }
 
+// 再帰
 func rec() int {
 	size := len(A)
 

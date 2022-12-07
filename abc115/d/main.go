@@ -52,7 +52,8 @@ func isOdd(n int) bool {
 
 var layerList, pattyList []int
 
-func solve(n, x int) int {
+// 再帰
+func rec(n, x int) int {
 	if n == 0 {
 		return 1
 	}
@@ -60,13 +61,13 @@ func solve(n, x int) int {
 		return 0
 	}
 	if x <= 1+(layerList[n-1]) {
-		return solve(n-1, x-1)
+		return rec(n-1, x-1)
 	}
 	if x == 2+(layerList[n-1]) {
 		return pattyList[n-1] + 1
 	}
 	if x <= 2+(2*layerList[n-1]) {
-		return 1 + pattyList[n-1] + solve(n-1, x-2-layerList[n-1])
+		return 1 + pattyList[n-1] + rec(n-1, x-2-layerList[n-1])
 	}
 	return pattyList[n-1] + pattyList[n-1] + 1
 }
@@ -85,5 +86,5 @@ func main() {
 	for i := 1; i < n+1; i++ {
 		pattyList[i] = (pattyList[i-1] * 2) + 1
 	}
-	Println(solve(n, x))
+	Println(rec(n, x))
 }
