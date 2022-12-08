@@ -74,6 +74,11 @@ func isPrime(n int) bool {
 	return true
 }
 
+var (
+	dr = []int{1, -1, 0, 0}
+	dc = []int{0, 0, 1, -1}
+)
+
 func main() {
 	N := toInt(readline())
 	NS := readIntSlice()
