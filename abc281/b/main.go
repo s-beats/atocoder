@@ -37,18 +37,32 @@ func readIntSlice() []int {
 	return slice
 }
 
+func readIntSlice2() (a, b int) {
+	slice := make([]int, 0)
+	lines := strings.Split(readline(), " ")
+	for _, v := range lines {
+		slice = append(slice, toInt(v))
+	}
+	return slice[0], slice[1]
+}
+
+func readIntSlice3() (a, b, c int) {
+	slice := make([]int, 0)
+	lines := strings.Split(readline(), " ")
+	for _, v := range lines {
+		slice = append(slice, toInt(v))
+	}
+	return slice[0], slice[1], slice[2]
+}
+
 func toInt(s string) int {
 	n, _ := strconv.Atoi(s)
 	return n
 }
 
-func toStr(n int) string {
-	return strconv.Itoa(n)
-}
-
-func isInt(s string) bool {
-	_, err := strconv.Atoi(s)
-	return err == nil
+func toStr(s string) int {
+	n, _ := strconv.Atoi(s)
+	return n
 }
 
 func abs(n int) int {
@@ -79,24 +93,33 @@ func isPrime(n int) bool {
 	return true
 }
 
-// 1文字
-func isUpper(s string) bool {
-	return unicode.IsUpper(rune(s[0]))
-}
-
-// 1文字
-func isLower(s string) bool {
-	return unicode.IsUpper(rune(s[0]))
-}
-
 var (
 	dr = []int{1, -1, 0, 0}
 	dc = []int{0, 0, 1, -1}
 )
 
 func main() {
-	N := toInt(readline())
-	NS := readIntSlice()
-
-	Println(N, NS)
+	N := readline()
+	if _, err := strconv.Atoi(string(N[0])); err != nil {
+		if unicode.IsUpper(rune(N[0])) {
+			if len(N[1:]) >= 7 {
+				if toInt(string(N[1])) > 0 {
+					for _, nv := range N[2:6] {
+						_, err := strconv.Atoi(string(nv))
+						if err != nil {
+							Println("No")
+							return
+						}
+					}
+					if _, err := strconv.Atoi(string(N[7])); err != nil {
+						if unicode.IsUpper(rune(N[7])) {
+							Println("Yes")
+							return
+						}
+					}
+				}
+			}
+		}
+	}
+	Println("No")
 }

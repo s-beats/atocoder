@@ -7,7 +7,6 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"unicode"
 )
 
 // 1行の文字列がデフォルトを超えることがあるのでサイズを明示的に指定
@@ -37,18 +36,32 @@ func readIntSlice() []int {
 	return slice
 }
 
+func readIntSlice2() (a, b int) {
+	slice := make([]int, 0)
+	lines := strings.Split(readline(), " ")
+	for _, v := range lines {
+		slice = append(slice, toInt(v))
+	}
+	return slice[0], slice[1]
+}
+
+func readIntSlice3() (a, b, c int) {
+	slice := make([]int, 0)
+	lines := strings.Split(readline(), " ")
+	for _, v := range lines {
+		slice = append(slice, toInt(v))
+	}
+	return slice[0], slice[1], slice[2]
+}
+
 func toInt(s string) int {
 	n, _ := strconv.Atoi(s)
 	return n
 }
 
-func toStr(n int) string {
-	return strconv.Itoa(n)
-}
-
-func isInt(s string) bool {
-	_, err := strconv.Atoi(s)
-	return err == nil
+func toStr(s string) int {
+	n, _ := strconv.Atoi(s)
+	return n
 }
 
 func abs(n int) int {
@@ -79,24 +92,35 @@ func isPrime(n int) bool {
 	return true
 }
 
-// 1文字
-func isUpper(s string) bool {
-	return unicode.IsUpper(rune(s[0]))
-}
-
-// 1文字
-func isLower(s string) bool {
-	return unicode.IsUpper(rune(s[0]))
-}
-
 var (
 	dr = []int{1, -1, 0, 0}
 	dc = []int{0, 0, 1, -1}
 )
 
 func main() {
-	N := toInt(readline())
-	NS := readIntSlice()
+	_, T := readIntSlice2()
+	A := make([]int, 0)
+	all := 0
+	lines := strings.Split(readline(), " ")
+	for _, v := range lines {
+		n := toInt(v)
+		A = append(A, n)
+		all += n
+	}
+	cycle := (T / all)
+	rest := T - (cycle * all)
 
-	Println(N, NS)
+	ans := [2]int{}
+	i := 0
+	for {
+		rest -= A[i]
+		if rest <= 0 {
+			ans[0] = i + 1
+			ans[1] = A[i] + rest
+			break
+		}
+		i++
+	}
+
+	Println(ans[0], ans[1])
 }
