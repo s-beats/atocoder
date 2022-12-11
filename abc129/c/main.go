@@ -113,8 +113,39 @@ var (
 )
 
 func main() {
-	N := toInt(readline())
-	NS := readIntSlice()
+	n, m := readIntSlice2()
+	a := make(map[int]int, m)
+	for i := 0; i < m; i++ {
+		a[toInt(readline())] = 1
+	}
 
-	Println(N, NS)
+	// i段目までの移動方法の数
+	dp := make([]int, n+1)
+	for i := range dp {
+		dp[i] = -1
+	}
+
+	dp[0] = 1
+	dp[1] = 1
+	if a[1] == 1 {
+		dp[1] = 0
+	}
+	for i := 2; i < n+1; i++ {
+		if a[i] == 1 {
+			continue
+		}
+		v := 0
+		if dp[i-2] != -1 {
+			v += dp[i-2]
+		}
+		if dp[i-1] != -1 {
+			v += dp[i-1]
+		}
+
+		// オーバーフロー対策で毎回割る
+		// https://qiita.com/drken/items/3b4fdf0a78e7a138cd9a
+		dp[i] = v % 1000000007
+	}
+
+	Println(dp[n])
 }
