@@ -89,6 +89,13 @@ func isLower(s string) bool {
 	return unicode.IsUpper(rune(s[0]))
 }
 
+func initSlice(ps *[]int) {
+	s := *ps
+	for i := range s {
+		s[i] = -1
+	}
+}
+
 var (
 	dr = []int{1, -1, 0, 0}
 	dc = []int{0, 0, 1, -1}
@@ -120,7 +127,33 @@ func rec(size int) bool {
 
 func main() {
 	S = readline()
-	if rec(len(S)) {
+	// 先頭からi文字が条件を満たすか否かのDP
+	dp := (make([]int, len(S)+1))
+	initSlice(&dp)
+	dp[0] = 1
+	updateDP := func(i int, s ...string) {
+		size := len(s[0])
+		if dp[i-size] == 1 {
+			for _, v := range s {
+				if string(S[i-size:i]) == v {
+					dp[i] = 1
+					break
+				}
+			}
+		}
+	}
+	for i := range dp {
+		if i >= 5 {
+			updateDP(i, "erase", "dream")
+		}
+		if i >= 6 {
+			updateDP(i, "eraser")
+		}
+		if i >= 7 {
+			updateDP(i, "dreamer")
+		}
+	}
+	if dp[len(S)] == 1 {
 		Println("YES")
 	} else {
 		Println("NO")
