@@ -120,7 +120,7 @@ func main() {
 		// 1要素のみの数列は必ず存在する
 		dp[i]++
 		for j := i - 3; j > 2; j-- {
-			dp[i] += dp[j] % mod
+			dp[i] = (dp[i] + dp[j]) % mod
 		}
 	}
 	Println(dp[s])
