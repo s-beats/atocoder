@@ -130,11 +130,11 @@ func main() {
 		weight := items[i][0]
 		value := items[i][1]
 		for j := 0; j < w+1; j++ {
-			if weight > j {
-				dp[i][j] = dp[i-1][j]
-			} else {
+			// ピックアップしない
+			dp[i][j] = max(dp[i][j], dp[i-1][j])
+			if weight <= j {
+				// ピックアップする
 				dp[i][j] = max(dp[i][j], dp[i-1][j-weight]+value)
-				dp[i][j] = max(dp[i][j], dp[i-1][j])
 			}
 			ans = max(ans, dp[i][j])
 		}
