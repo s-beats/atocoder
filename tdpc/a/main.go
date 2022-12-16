@@ -116,19 +116,27 @@ func main() {
 	n := toInt(readline())
 	p := []int{0}
 	p = append(p, readIntSlice()...)
-	ansMap := make(map[int]struct{})
-	ansMap[0] = struct{}{}
-	ansMap[p[1]] = struct{}{}
-	dp := make([][]int, n+1)
-	dp[1] = []int{0, p[1]}
-	for i := 2; i < n+1; i++ {
-		dp[i] = dp[i-1]
-		for _, v := range dp[i-1] {
-			if _, ok := ansMap[v+p[i]]; !ok {
-				ansMap[v+p[i]] = struct{}{}
-				dp[i] = append(dp[i], v+p[i])
+	// 状態 = 先頭からN個選んだ状態 = N
+	// 遷移 = 取りうる得点の合計 = N(N*100) = (N^2*100N)/N
+	dp := make([][]bool, n+1)
+	for i := range dp {
+		dp[i] = make([]bool, 10001)
+	}
+	dp[0][0] = true
+	for i := 1; i < n+1; i++ {
+		dp[i][0] = true
+		for j := 1; j < 10001; j++ {
+			dp[i][j] = dp[i-1][j]
+			if !dp[i][j] && j-p[i] > -1 {
+				dp[i][j] = dp[i-1][j-p[i]]
 			}
 		}
 	}
-	Println(len(ansMap))
+	ans := 0
+	for _, v := range dp[n] {
+		if v {
+			ans++
+		}
+	}
+	Println(ans)
 }
