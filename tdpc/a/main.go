@@ -116,6 +116,7 @@ func main() {
 	n := toInt(readline())
 	p := []int{0}
 	p = append(p, readIntSlice()...)
+	// 部分和
 	// 状態 = 先頭からN個選んだ状態 = N
 	// 遷移 = 取りうる得点の合計 = N(N*100) = (N^2*100N)/N
 	dp := make([][]bool, n+1)
@@ -140,3 +141,4 @@ func main() {
 	}
 	Println(ans)
 }
+
