@@ -117,6 +117,7 @@ func main() {
 		cur := que[0]
 		que = que[1:]
 
+		// 四方向を走査
 		for i := 0; i < 4; i++ {
 			r := cur[0] + dr[i]
 			c := cur[1] + dc[i]
