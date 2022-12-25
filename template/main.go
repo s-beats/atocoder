@@ -108,7 +108,9 @@ func isLower(s string) bool {
 }
 
 var (
+	// 行移動
 	dr = []int{1, -1, 0, 0}
+	// 列移動
 	dc = []int{0, 0, 1, -1}
 )
 
